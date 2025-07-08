@@ -3,8 +3,13 @@ const statusCodes = require("http-status-codes")
 
 const signupValidation = async (req, res, next) => {
     const schema = yup.object({
-        name: yup.string().required("Name is required"),
-        email: yup.string().email("Please enter a valid email").required("Email is required"),
+        name: yup
+            .string()
+            .required("Name is required"),
+        email: yup
+            .string()
+            .email("Please enter a valid email")
+            .required("Email is required"),
         password: yup.string()
             .required("Password is required")
             .min(6, "Password must be at least 6 characters")
