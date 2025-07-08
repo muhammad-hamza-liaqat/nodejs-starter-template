@@ -16,12 +16,14 @@
     "start": "node src/index.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.1.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "http-status-codes": "^2.3.0",
-    "mongoose": "^8.16.2"
+    "mongoose": "^8.16.2",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

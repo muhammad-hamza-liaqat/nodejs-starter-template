@@ -9,6 +9,7 @@ const path = require("path")
 const cors = require('./config/corsConfig')
 const requestLogger = require("./utils/requestLogger")
 const notFoundHandler = require("./utils/notFoundHandler")
+const { myAppRoutes } = require("./routes/index")
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 });
 
 // add your application routes here.
+app.use('/api', myAppRoutes)
 
 app.use(notFoundHandler);
 
