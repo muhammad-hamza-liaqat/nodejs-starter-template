@@ -1,4 +1,5 @@
 const statusCodes = require("http-status-codes")
+const jwt = require("jsonwebtoken")
 const User = require("../models/user.model")
 
 const { sendSuccess, sendError } = require("../utils/responseHandler")
@@ -35,8 +36,9 @@ const userLogin = async (req, res) => {
         console.log("password check")
         return sendError(res, statusCodes.CONFLICT, "Invalid Email or Password")
     }
-    const userResponse = { _id: isUser?._id, email: isUser?.email }
-    return sendSuccess(res, statusCodes.OK, "User Login Successfully", { user: userResponse })
+    const token = jwt.sign({ _id: isUser?._id, email: isUser?.email, name: isUser?.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_SECRET_EXPIRY_IN })
+    const user = { _id: isUser?._id, email: isUser?.email }
+    return sendSuccess(res, statusCodes.OK, "User Login Successfully", { user, token })
 }
 
 module.exports = {
