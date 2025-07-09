@@ -24,7 +24,22 @@ const userSignUp = async (req, res) => {
     return sendSuccess(res, statusCodes.CREATED, "User registered successfully", { user: responseUser });
 }
 
+const userLogin = async (req, res) => {
+    const { email, password } = req.body;
+    const isUser = await User.findOne({ email })
+    if (!isUser) {
+        return sendError(res, statusCodes.CONFLICT, "Invalid Email or Password")
+    }
+    const verifyPassword = await comparePassword(password, isUser?.password)
+    if (!verifyPassword) {
+        console.log("password check")
+        return sendError(res, statusCodes.CONFLICT, "Invalid Email or Password")
+    }
+    const userResponse = { _id: isUser?._id, email: isUser?.email }
+    return sendSuccess(res, statusCodes.OK, "User Login Successfully", { user: userResponse })
+}
 
 module.exports = {
-    userSignUp
+    userSignUp,
+    userLogin
 }
