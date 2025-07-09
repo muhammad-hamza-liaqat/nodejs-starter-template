@@ -33,7 +33,6 @@ const userLogin = async (req, res) => {
     }
     const verifyPassword = await comparePassword(password, isUser?.password)
     if (!verifyPassword) {
-        console.log("password check")
         return sendError(res, statusCodes.CONFLICT, "Invalid Email or Password")
     }
     const token = jwt.sign({ _id: isUser?._id, email: isUser?.email, name: isUser?.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_SECRET_EXPIRY_IN })
