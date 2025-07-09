@@ -37,7 +37,7 @@ const userLogin = async (req, res) => {
     }
     const token = jwt.sign({ _id: isUser?._id, email: isUser?.email, name: isUser?.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_SECRET_EXPIRY_IN })
     const user = { _id: isUser?._id, email: isUser?.email }
-    console.log(process.env.JWT_SECRET, process.env.JWT_SECRET_EXPIRY_IN, "---Hamza")
+    // console.log(process.env.JWT_SECRET, process.env.JWT_SECRET_EXPIRY_IN, "---Hamza")
     return sendSuccess(res, statusCodes.OK, "User Login Successfully", { user, token })
 }
 
