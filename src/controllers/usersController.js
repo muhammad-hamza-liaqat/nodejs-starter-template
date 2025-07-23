@@ -8,7 +8,7 @@ const getUserInformation = async (req, res) => {
   // const userId = "6880b45344b5d1bc80bb914c"
   const user = await User.findById(userId);
   if (!user) {
-    return sendError(res, statusCode.CONFLICT, "No such User Exist!");
+    return sendError(res, statusCode.CONFLICT, "USER_ALREADY_EXISTS");
   }
   const userInformation = {
     _id: user?._id,
@@ -16,29 +16,21 @@ const getUserInformation = async (req, res) => {
     email: user?.email,
     password: user?.password,
   };
-  return sendSuccess(
-    res,
-    statusCode.OK,
-    "User information fetched successfully!",
-    { user: userInformation }
-  );
+  return sendSuccess(res, statusCode.OK, "USER_INFORMATION_FETCHED", {
+    user: userInformation,
+  });
 };
 
 const uploadMedia = (req, res) => {
   if (!req.file) {
-    return sendError(res, statusCode.BAD_REQUEST, "No file uploaded");
+    return sendError(res, statusCode.BAD_REQUEST, "NO_FILE_UPLOADED");
   }
 
   const folder = req.file.mimetype.startsWith("image/") ? "images" : "videos";
 
-  return sendSuccess(
-    res,
-    statusCode.OK,
-    "File uploaded successfully",
-    {
-      fileUrl: `/media/${folder}/${req.file.filename}`,
-    }
-  );
+  return sendSuccess(res, statusCode.OK, "FILE_UPLOADED_SUCCESSFULLY", {
+    fileUrl: `/media/${folder}/${req.file.filename}`,
+  });
 };
 
 module.exports = {

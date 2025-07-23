@@ -1,0 +1,9 @@
+{
+  "USER_ALREADY_EXISTS": "المستخدم موجود بالفعل",
+  "USER_REGISTER_SUCCESS": "تم تسجيل المستخدم بنجاح",
+  "INVALID_EMAIL_OR_PASSWORD": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+  "USER_LOGIN_SUCCESS": "تم تسجيل الدخول بنجاح",
+  "FILE_UPLOADED_SUCCESSFULLY": "تم تحميل الملف بنجاح",
+  "USER_INFORMATION_FETCHED": "تم جلب معلومات المستخدم بنجاح",
+  "NO_FILE_UPLOADED": "لم يتم تحميل أي ملف"
+}
