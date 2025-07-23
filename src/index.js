@@ -7,6 +7,7 @@ const path = require("path");
 const cors = require("./config/corsConfig");
 const requestLogger = require("./utils/requestLogger");
 const notFoundHandler = require("./utils/notFoundHandler");
+const methodNotAllowedHandler = require("./utils/methodNotAllowedHandler");
 const { myAppRoutes } = require("./routes/index");
 
 const app = express();
@@ -20,14 +21,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "../public")));
 
-app.use(
-  "/media/images",
-  express.static(path.join(__dirname, "media/images"))
-);
-app.use(
-  "/media/videos",
-  express.static(path.join(__dirname, "media/videos"))
-);
+app.use("/media/images", express.static(path.join(__dirname, "media/images")));
+app.use("/media/videos", express.static(path.join(__dirname, "media/videos")));
 
 app.get("/", (req, res) => {
   res.render("startServer.ejs", { port: PORT });
@@ -35,6 +30,7 @@ app.get("/", (req, res) => {
 
 app.use("/api", myAppRoutes);
 
+app.use(methodNotAllowedHandler);
 app.use(notFoundHandler);
 
 app.listen(PORT, () => {
