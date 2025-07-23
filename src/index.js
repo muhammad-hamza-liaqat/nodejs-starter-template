@@ -9,6 +9,7 @@ const requestLogger = require("./utils/requestLogger");
 const notFoundHandler = require("./utils/notFoundHandler");
 const methodNotAllowedHandler = require("./utils/methodNotAllowedHandler");
 const { myAppRoutes } = require("./routes/index");
+const i18n = require("./utils/i18n");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,6 +17,8 @@ const PORT = process.env.PORT || 8080;
 app.use(requestLogger);
 app.use(cors);
 app.use(express.json());
+
+app.use(i18n.init);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
