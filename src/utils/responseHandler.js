@@ -1,23 +1,22 @@
-
-const sendSuccess = (res, statusCode, message, data = {}) => {
-    return res.status(statusCode).json({
-        success: true,
-        status: statusCode,
-        message,
-        data,
-    });
+const sendSuccess = (res, statusCode, messageKey, data = {}) => {
+  return res.status(statusCode).json({
+    success: true,
+    status: statusCode,
+    message: res.__(messageKey),
+    data,
+  });
 };
 
-const sendError = (res, statusCode, message, details = {}) => {
-    return res.status(statusCode).json({
-        success: false,
-        status: statusCode,
-        message,
-        details,
-    });
+const sendError = (res, statusCode, messageKey, details = {}) => {
+  return res.status(statusCode).json({
+    success: false,
+    status: statusCode,
+    message: res.__(messageKey),
+    details,
+  });
 };
 
 module.exports = {
-    sendSuccess,
-    sendError
+  sendSuccess,
+  sendError,
 };

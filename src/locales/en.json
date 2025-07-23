@@ -1,0 +1,9 @@
+{
+  "USER_ALREADY_EXISTS": "User already exists",
+  "USER_REGISTER_SUCCESS": "User registered successfully",
+  "INVALID_EMAIL_OR_PASSWORD": "Invalid Email or Password",
+  "USER_LOGIN_SUCCESS": "User login successful",
+  "FILE_UPLOADED_SUCCESSFULLY": "File uploaded successfully",
+  "USER_INFORMATION_FETCHED": "User information fetched successfully!",
+  "NO_FILE_UPLOADED": "No file uploaded"
+}
