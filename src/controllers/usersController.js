@@ -19,11 +19,29 @@ const getUserInformation = async (req, res) => {
   return sendSuccess(
     res,
     statusCode.OK,
-    "user information fetched successfully!",
+    "User information fetched successfully!",
     { user: userInformation }
+  );
+};
+
+const uploadMedia = (req, res) => {
+  if (!req.file) {
+    return sendError(res, statusCode.BAD_REQUEST, "No file uploaded");
+  }
+
+  const folder = req.file.mimetype.startsWith("image/") ? "images" : "videos";
+
+  return sendSuccess(
+    res,
+    statusCode.OK,
+    "File uploaded successfully",
+    {
+      fileUrl: `/media/${folder}/${req.file.filename}`,
+    }
   );
 };
 
 module.exports = {
   getUserInformation,
+  uploadMedia,
 };
