@@ -27,13 +27,20 @@ nodejs_starter_template/
 │   ├── config/              # App configuration (CORS, DB connection)
 │   ├── controllers/         # Route controllers (business logic)
 │   ├── helpers/             # Helper utilities (e.g., bcrypt)
+│   ├── locales/             # different languages json here
+│   ├── media/               # media uploaded to the server
+│   │   ├── images/          # for images
+│   │   └── videos/          # for videos
 │   ├── middlewares/         # Express middlewares (auth, etc.)
 │   ├── models/              # Mongoose models
 │   ├── routes/              # Route definitions
 │   │   ├── authorizedRoutes/    # (Reserved for protected routes)
 │   │   └── unauthorizedRoutes/  # Public routes (e.g., auth)
+│   ├── seeders/             # seeders for the DB
 │   ├── utils/               # Utilities (logger, handlers, validation)
+│   ├── validations/         # all validations are added here
 │   └── views/               # EJS templates
+│   └── index.js/            # index.js (main file)
 ├── package.json             # Project metadata and dependencies
 ├── vercel.json              # Vercel deployment config
 └── ...
