@@ -1,9 +1,10 @@
 const statusCodes = require("http-status-codes");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user.model");
 
+const User = require("../models/user.model");
 const { sendSuccess, sendError } = require("../utils/responseHandler");
 const { hashPassword, comparePassword } = require("../helpers/bcrypt");
+const { sendEmail } = require("../utils/nodemailer/sendEmail");
 
 const userSignUp = async (req, res) => {
   const { name, email, password } = req.body;
@@ -43,6 +44,10 @@ const userLogin = async (req, res) => {
     { expiresIn: process.env.JWT_SECRET_EXPIRY_IN }
   );
   const user = { _id: isUser?._id, email: isUser?.email };
+  sendEmail("loginSuccess", {
+    to: isUser?.email,
+    name: isUser?.name,
+  });
   // console.log(process.env.JWT_SECRET, process.env.JWT_SECRET_EXPIRY_IN, "---Hamza")
   return sendSuccess(res, statusCodes.OK, "USER_LOGIN_SUCCESS", {
     user,
