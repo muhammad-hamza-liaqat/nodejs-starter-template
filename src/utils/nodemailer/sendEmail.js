@@ -15,7 +15,7 @@ const sendEmail = async (templateName, data) => {
     const { subject, html } = template(data);
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"🚀 Node.js Support Team" <${process.env.MY_CUSTOM_EMAIL}>`,
       to: data.to,
       subject,
       html,
