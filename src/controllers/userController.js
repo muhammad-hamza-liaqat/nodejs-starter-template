@@ -43,6 +43,12 @@ const userLogin = async (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_SECRET_EXPIRY_IN }
   );
+
+  const refreshToken = jwt.sign(
+    { _id: isUser._id, email: isUser.email },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: process.env.JWT_REFRESH_SECRET_EXPIRY_IN }
+  );
   const user = { _id: isUser?._id, email: isUser?.email };
   sendEmail("loginSuccess", {
     to: isUser?.email,
@@ -52,10 +58,43 @@ const userLogin = async (req, res) => {
   return sendSuccess(res, statusCodes.OK, "USER_LOGIN_SUCCESS", {
     user,
     token,
+    refreshToken,
+  });
+};
+
+const refreshTokenGeneration = async (req, res) => {
+  const { refreshToken } = req.body;
+
+  const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+
+  const newAccessToken = jwt.sign(
+    {
+      _id: decoded._id,
+      email: decoded.email,
+      name: decoded.name,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_SECRET_EXPIRY_IN }
+  );
+
+  const newRefreshToken = jwt.sign(
+    {
+      _id: decoded._id,
+      email: decoded.email,
+      name: decoded.name,
+    },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: process.env.JWT_REFRESH_SECRET_EXPIRY_IN }
+  );
+
+  return sendSuccess(res, statusCodes.OK, "ACCESS_TOKEN_REFRESHED", {
+    token: newAccessToken,
+    refreshToken: newRefreshToken,
   });
 };
 
 module.exports = {
   userSignUp,
   userLogin,
+  refreshTokenGeneration,
 };
