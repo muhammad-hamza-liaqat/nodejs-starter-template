@@ -1,5 +1,4 @@
 const yup = require("yup");
-const statusCodes = require("http-status-codes");
 
 const loginValidation = (req, res, next) => {
   const schema = yup
@@ -15,12 +14,12 @@ const loginValidation = (req, res, next) => {
     })
     .noUnknown(true, "[email and password] are allowed only");
 
-  try {
-    schema.validateSync(req.body, { abortEarly: true, strict: true });
-    next();
-  } catch (error) {
-    res.status(statusCodes.BAD_REQUEST).json({ error: error.errors });
-  }
+  schema.validateSync(req.body, {
+    abortEarly: true,
+    strict: true,
+  });
+
+  next();
 };
 
 module.exports = loginValidation;
