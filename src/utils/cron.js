@@ -15,9 +15,9 @@ function formatPKTime(date) {
 }
 
 function startCronJobs() {
-  // runs every minute
+  // runs every 5 minute
   cron
-    .schedule("* * * * *", async () => {
+    .schedule("*/5 * * * *", async () => {
       const runStart = new Date();
       console.log(`Run started at ${formatPKTime(runStart)}`);
 
