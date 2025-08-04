@@ -24,7 +24,7 @@ A boilerplate Node.js project using Express, Mongoose, EJS, and modern best prac
 nodejs_starter_template/
 ├── public/                  # Static assets (e.g., expressjs-icon.svg)
 ├── src/
-│   ├── config/              # App configuration (CORS, DB connection)
+│   ├── config/              # App configuration (CORS, DB connection, redis connection)
 │   ├── controllers/         # Route controllers (business logic)
 │   ├── helpers/             # Helper utilities (e.g., bcrypt)
 │   ├── locales/             # different languages json here
@@ -37,11 +37,12 @@ nodejs_starter_template/
 │   │   ├── authorizedRoutes/    # (Reserved for protected routes)
 │   │   └── unauthorizedRoutes/  # Public routes (e.g., auth)
 │   ├── seeders/             # seeders for the DB
-│   ├── utils/               # Utilities (logger, handlers, validation)
+│   ├── utils/               # Utilities (logger, handlers, validation, locales's json, cron)
 │   ├── validations/         # all validations are added here
 │   └── views/               # EJS templates
 │   └── index.js/            # index.js (main file)
 ├── package.json             # Project metadata and dependencies
+├── package-lock.json             # Project metadata and dependencies
 ├── vercel.json              # Vercel deployment config
 └── ...
 ```
@@ -80,6 +81,12 @@ JWT_SECRET=your_jwt_secret
 
 ### 4. Start the development server
 
+Visit [https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/install-redis-on-mac-os/] to install the redis on the mac and then hit the below command to start the redis server
+
+```bash
+brew services start redis
+```
+
 ```bash
 npm run dev
 ```
@@ -92,6 +99,10 @@ Visit [http://localhost:8080](http://localhost:8080) to see the welcome page.
 
 - `npm run dev` — Start server with nodemon (auto-reload)
 - `npm start` — Start server normally
+- `brew services start redis` — Start redis server
+- `brew services stop redis` — Stop redis server
+- `redis-cli` — connect to the redis local connection
+- `KEYS refreshToken:*` — to get all the refresh tokens saved in the redis server
 
 ---
 
