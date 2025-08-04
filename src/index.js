@@ -11,6 +11,7 @@ const methodNotAllowedHandler = require("./utils/methodNotAllowedHandler");
 const { myAppRoutes } = require("./routes/index");
 const i18n = require("./utils/i18n");
 const { startCronJobs } = require("./utils/cron");
+const { connectRedis } = require("./config/redis.connection");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -38,6 +39,7 @@ app.use(methodNotAllowedHandler);
 app.use(notFoundHandler);
 
 startCronJobs();
+connectRedis();
 
 app.listen(PORT, () => {
   console.warn(`🚀 Node.js server is running at http://localhost:${PORT}/`);

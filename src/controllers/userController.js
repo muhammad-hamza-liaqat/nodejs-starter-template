@@ -5,6 +5,7 @@ const User = require("../models/user.model");
 const { sendSuccess, sendError } = require("../utils/responseHandler");
 const { hashPassword, comparePassword } = require("../helpers/bcrypt");
 const { sendEmail } = require("../utils/nodemailer/sendEmail");
+const { redisClient } = require("../config/redis.connection");
 
 const userSignUp = async (req, res) => {
   const { name, email, password } = req.body;
@@ -49,6 +50,27 @@ const userLogin = async (req, res) => {
     process.env.JWT_REFRESH_SECRET,
     { expiresIn: process.env.JWT_REFRESH_SECRET_EXPIRY_IN }
   );
+
+  // Convert "20d" or similar into seconds for Redis TTL
+  let ttlInSeconds;
+  if (process.env.JWT_REFRESH_SECRET_EXPIRY_IN.includes("d")) {
+    const days = parseInt(process.env.JWT_REFRESH_SECRET_EXPIRY_IN);
+    ttlInSeconds = days * 24 * 60 * 60;
+  } else if (process.env.JWT_REFRESH_SECRET_EXPIRY_IN.includes("h")) {
+    const hours = parseInt(process.env.JWT_REFRESH_SECRET_EXPIRY_IN);
+    ttlInSeconds = hours * 60 * 60;
+  } else if (process.env.JWT_REFRESH_SECRET_EXPIRY_IN.includes("m")) {
+    const minutes = parseInt(process.env.JWT_REFRESH_SECRET_EXPIRY_IN);
+    ttlInSeconds = minutes * 60;
+  } else {
+    ttlInSeconds = Number(process.env.JWT_REFRESH_SECRET_EXPIRY_IN);
+  }
+
+  // Store refresh token in Redis
+  await redisClient.set(`refreshToken:${isUser._id}`, refreshToken, {
+    EX: ttlInSeconds,
+  });
+
   const user = { _id: isUser?._id, email: isUser?.email };
   sendEmail("loginSuccess", {
     to: isUser?.email,
